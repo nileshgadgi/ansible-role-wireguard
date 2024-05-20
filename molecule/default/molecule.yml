@@ -2,8 +2,9 @@
 driver:
   name: docker
 platforms:
-  - name: "${image:-ubuntu} Machine"
+  - name: "${image:-ubuntu}-${tag:-22.04}-machine"
     image: "${image:-ubuntu}:${tag:-22.04}"
+    privileged: yes
     pre_build_image: false
 lint: |
   set -e
@@ -15,7 +16,7 @@ provisioner:
   playbooks:
     converge: playbook.yml
   env:
-    ANSIBLE_EXTRA_VARS: "{'skip_handlers': true}"
+    skip_handlers: "true"
 scenario:
   name: default
   test_sequence:
