@@ -2,10 +2,33 @@
 driver:
   name: docker
 platforms:
-  - name: instance
-    image: ubuntu:22.04
-    pre_build_image: true
+  - name: "${image:-ubuntu} Machine"
+    image: "${image:-ubuntu}:${tag:-22.04}"
+    pre_build_image: false
 lint: |
   set -e
   yamllint .
   ansible-lint
+provisioner:
+  name: ansible
+  log: true
+  playbooks:
+    converge: playbook.yml
+  env:
+    ANSIBLE_EXTRA_VARS: "{'skip_handlers': true}"
+scenario:
+  name: default
+  test_sequence:
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
+verifier:
+  name: ansible

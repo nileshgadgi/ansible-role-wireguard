@@ -1,0 +1,23 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Check if wireguard_network_interface is defined
+      debug:
+        msg: "wireguard_network_interface is not defined. Skipping interface check."
+      when: wireguard_network_interface is not defined
+
+    - name: Check if network interface exists
+      ansible.builtin.command:
+        cmd: "ip link show {{ wireguard_network_interface }}"
+      register: interface_check
+      failed_when: interface_check.rc != 0
+      changed_when: false
+      when: wireguard_network_interface is defined
+
+    - name: Ensure network interface is up
+      assert:
+        that:
+          - interface_check.rc == 0
+        fail_msg: "Network interface {{ wireguard_network_interface }} does not exist."
+      when: wireguard_network_interface is defined
