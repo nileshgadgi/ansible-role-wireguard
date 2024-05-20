@@ -1,0 +1,104 @@
+---
+#
+# This is the canonical configuration for the `README.md`
+# Run `make readme` to rebuild the `README.md`
+#
+
+# Name of this project
+name: Ansible Role Wireguard
+
+# License of this project
+license: "MIT"
+
+# Canonical GitHub repo
+github_repo: clouddrove/ansible-role-wireguard
+
+# Badges to display
+badges:
+  - name: "Ansible"
+    image: "https://img.shields.io/badge/Ansible-2.9-green?style=flat&logo=ansible"
+    url: "https://www.ansible.com"
+  - name: "Licence"
+    image: "https://img.shields.io/badge/License-MIT-blue.svg"
+    url: "LICENSE.md"
+  - name: "Distribution"
+    image: "https://img.shields.io/badge/ubuntu-20.x-orange?style=flat&logo=ubuntu"
+    url: "https://ubuntu.com/"
+  - name: "Actions"
+    image: "https://github.com/clouddrove/ansible-role-wireguard/actions/workflows/lint.yml/badge.svg"
+    url: "https://github.com/clouddrove/ansible-role-wireguard/actions/workflows/lint.yml"
+
+# Prerequesties to display
+# yamllint disable
+prerequesties:
+  - name: "Ansible2.9"
+    url: "https://www.ansible.com"
+  - name: "Python"
+    url: "https://www.python.org/downloads"
+
+# What Includes to display
+what_includes:
+  - name: "openssl"
+  - name: "groff"
+  - name: "telnet"
+  - name: "htop"
+  - name: "wget"
+  - name: "python3-pip"
+  - name: "zip"
+  - name: "unzip"
+  - name: "fuse"
+  - name: "libssl-dev"
+  - name: "pkg-config"
+  - name: "build-essential"
+  - name: "libfuse-dev"
+  - name: "libcurl4-openssl-dev"
+  - name: "libxml2-dev"
+  - name: "mime-support"
+  - name: "automake"
+  - name: "libtool"
+  - name: "ntp"
+  - name: "vpc"
+
+#  description of this project
+description: |-
+  Ansible role for wireguard server Setup
+# yamllint enable
+# How to use this project
+usage: |-
+  ```yaml
+    - hosts: localhost
+      remote_user: root
+      become: true
+      roles:
+        - ansible_role_wireguard
+  ```
+
+# How to install project
+installation: |-
+  ```console
+    $ ansible-galaxy install clouddrove.ansible_role_wireguard
+  ```
+
+
+variables: |-
+  ```yaml
+   wireguard_port: "51820"
+
+   wireguard_path: "/etc/wireguard"
+
+   wireguard_network_name: "wg0"
+
+   wireguard_group: "wireguard"
+
+   wireguard_ip_address_var: "192.168.0.1/24"
+
+   wireguard_network_interface: ens5
+   wireguard_clients:
+     - name: "user1"
+       public_key: UnbxoXEBq2uu960p/mQ0/BrbG0qWj32FkyTE5t+2YBU=
+       allowed_ips: "192.168.0.2/32"
+
+     - name: "user2"
+       public_key: K7D7xr41Ec/NeZn4+RqoYE54gwHYemIySwrEgANsw1k=
+       allowed_ips: "192.168.0.3/32"
+  ```

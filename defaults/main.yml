@@ -1,0 +1,21 @@
+---
+# defaults file for ansible-role-wireguard-setup
+
+wireguard_port: "51820"
+
+wireguard_path: "/etc/wireguard"
+
+wireguard_network_name: "wg0"
+
+wireguard_group: "wireguard"
+
+wireguard_ip_address_var: "192.168.0.1/24"  ## IP address and subnet mask for wireguard interface.
+wireguard_network_interface: ens5
+wireguard_clients:
+  - name: "user1"
+    public_key: UnbxoXEBq2uu960p/mQ0/BrbG0qWj32FkyTE5t+2YBU=   ## client public key for user1
+    allowed_ips: "192.168.0.2/32"
+
+  - name: "user2"
+    public_key: K7D7xr41Ec/NeZn4+RqoYE54gwHYemIySwrEgANsw1k=   ## client public key for user2
+    allowed_ips: "192.168.0.3/32"

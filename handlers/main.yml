@@ -1,0 +1,23 @@
+---
+# handlers file for ansible-role-wireguard-setup
+
+- name: daemon-reload
+  systemd:
+    daemon_reload: yes
+
+- name: Enable wg-quick service
+  service:
+    name: "wg-quick@{{ wireguard_network_name }}"
+    enabled: yes
+
+- name: Restart wg-quick service
+  service:
+    name: "wg-quick@{{ wireguard_network_name }}"
+    state: restarted
+    enabled: yes
+
+- name: Reload wg-quick service
+  service:
+    name: "wg-quick@{{ wireguard_network_name }}"
+    state: reloaded
+    enabled: yes
