@@ -1,0 +1,38 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    # - name: Count WireGuard interfaces
+    #   ansible.builtin.shell: |
+    #     set -o errexit
+    #     set -o pipefail
+    #     set -o nounset
+    #     wg | grep "peer: " | wc -l
+    #     exit 0
+    #   args:
+    #     executable: "/bin/bash"
+    #   register: wireguard__interfaces_count
+    #   changed_when: false
+
+    # - name: Print WireGuard interface count
+    #   ansible.builtin.debug:
+    #     var: wireguard__interfaces_count.stdout
+    - name: Check if wireguard_network_interface is defined
+      debug:
+        msg: "wireguard_network_interface is not defined. Skipping interface check."
+      when: wireguard_network_interface is not defined
+
+    - name: Check if network interface exists
+      ansible.builtin.command:
+        cmd: "ip link show {{ wireguard_network_interface }}"
+      register: interface_check
+      failed_when: interface_check.rc != 0
+      changed_when: false
+      when: wireguard_network_interface is defined
+
+    - name: Ensure network interface is up
+      assert:
+        that:
+          - interface_check.rc == 0
+        fail_msg: "Network interface {{ wireguard_network_interface }} does not exist."
+      when: wireguard_network_interface is defined

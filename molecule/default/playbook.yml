@@ -1,0 +1,4 @@
+- name: Converge
+  hosts: all
+  roles:
+    - nileshgadgi.ansible_role_wireguard
