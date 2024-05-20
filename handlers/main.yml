@@ -4,29 +4,29 @@
 - name: daemon-reload
   systemd:
     daemon_reload: yes
-  when: not skip_handlers|default(false)
+  when: skip_handlers|default(false)
 
 - name: Enable wg-quick service
   service:
     name: "wg-quick@{{ wireguard_network_name }}"
     enabled: yes
-  when: not skip_handlers|default(false)
+  when: skip_handlers|default(false)
 
 - name: Restart wg-quick service
   service:
     name: "wg-quick@{{ wireguard_network_name }}"
     state: restarted
     enabled: true
-  when: not skip_handlers|default(false)
+  when: skip_handlers|default(false)
 
 - name: Reload wg-quick service
   service:
     name: "wg-quick@{{ wireguard_network_name }}"
     state: reloaded
     enabled: true
-  when: not skip_handlers|default(false)
+  when: skip_handlers|default(false)
 
 - name: Reload sysctl
   ansible.builtin.command: sysctl -p
   changed_when: true
-  when: not skip_handlers|default(false)
+  when: skip_handlers|default(false)
